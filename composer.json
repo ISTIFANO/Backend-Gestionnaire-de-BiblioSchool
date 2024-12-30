@@ -1,0 +1,5 @@
+{
+    "require": {
+        "phpdevcommunity/php-dotenv": "^3.0"
+    }
+}
