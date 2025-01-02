@@ -6,6 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Test\\PhpDevCommunity\\' => array($vendorDir . '/phpdevcommunity/php-dotenv/tests'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PhpDevCommunity\\' => array($vendorDir . '/phpdevcommunity/php-dotenv/src'),
+    'App\\' => array($baseDir . '/src'),
 );
