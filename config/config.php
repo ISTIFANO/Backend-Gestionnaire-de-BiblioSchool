@@ -4,6 +4,9 @@
 require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
+// use Whoops\Run;
+// use Whoops\Handler\PrettyPageHandler;
+
 
 class config{
 
@@ -21,6 +24,10 @@ class config{
         self::$database = $_ENV['DATABASE'];
         self::$user = $_ENV['USER'];
         self::$password = $_ENV['PASSWORD'];
+
+        //  $whoops = new \whoops\Run;
+        //  $whoops->pushHandler(new \whoops\Handler\PrettyPageHandler());
+        //  $whoops->register();
     }
     public static function connect()
     {
@@ -30,7 +37,7 @@ class config{
             try {
                 self::$connexion = new PDO($info, self::$user, self::$password);
         if (self::$connexion) {
-                    //  echo "<h1>Connected succ!</h1>";
+                    //   echo "<h1>Connected succ!</h1>";
                 }
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -39,5 +46,5 @@ class config{
         return self::$connexion;
     }
 }
-$con = new DatabaseConfiguration();
+$con = new config();
 $con::connect();
