@@ -72,5 +72,12 @@ class Utilisateur {
     public function updateInfoUser() {
       
     }
+    public function __toString()
+    {
+        return "Nom :" .$this->name."Nom :" .$this->name
+        
+    }
+
+    
 }
 ?>

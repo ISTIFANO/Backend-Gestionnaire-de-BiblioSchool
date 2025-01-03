@@ -8,7 +8,7 @@ class Categories {
 
     
     public function __construct($name) {
-        $this->connexion = (new DatabaseConfiguration())::connect();
+        $this->connexion = (new config())::connect();
 
         $this->name = $name;
         $this->created_at = date('Y-m-d H:i:s');

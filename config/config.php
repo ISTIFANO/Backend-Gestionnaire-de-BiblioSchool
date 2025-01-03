@@ -4,8 +4,8 @@
 require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
-// use Whoops\Run;
-// use Whoops\Handler\PrettyPageHandler;
+ use Whoops\Run;
+use Whoops\Handler\PrettyPageHandler;
 
 
 class config{
@@ -25,9 +25,11 @@ class config{
         self::$user = $_ENV['USER'];
         self::$password = $_ENV['PASSWORD'];
 
-        //  $whoops = new \whoops\Run;
-        //  $whoops->pushHandler(new \whoops\Handler\PrettyPageHandler());
-        //  $whoops->register();
+        $whoops = new \Whoops\Run;
+        $whoops->allowQuit(false);
+        $whoops->writeToOutput(false);
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        //  $html = $whoops->handleException($e);
     }
     public static function connect()
     {

@@ -14,6 +14,10 @@ class Etat {
     public function setStatut($statut) {
         $this->statut = $statut;
     }
+    public function __toString()
+    {
+        return "status :".$this->statut."id :".$this->id;
+    }
 }
 
 ?>
