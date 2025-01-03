@@ -74,7 +74,7 @@ class Utilisateur {
     }
     public function __toString()
     {
-        return "Nom :" .$this->name."Nom :" .$this->name
+        return "Nom :" .$this->name."Prenom :" .$this->lastname."Email :".$this->email."Telephone :".$this->phone;
         
     }
 

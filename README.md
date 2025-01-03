@@ -45,32 +45,32 @@ Ce projet consiste à développer une application web permettant de gérer une b
 ### Étape 1 : Clonez le repository
 
 ```bash
-git clone https://github.com/votre-repository/bibliotheque-scolaire.git
-cd bibliotheque-scolaire
+git clone https://github.com/ISTIFANO/Backend-Gestionnaire-de-BiblioSchool.git
+cd Backend_Gestionnaire_de_BiblioSchool
 
-###Étape 2 : Installer les dépendances
+##Étape 2 : Installer les dépendances
 
 ```bash
 composer install
 
-###Étape 3 : Configurer le fichier .env
+##Étape 3 : Configurer le fichier .env
 ```bash
 DB_HOST=localhost
 DB_NAME=biblioschool
 DB_USER=root
 DB_PASS=
 
-###Étape 4 : Créez la base de données
-cd bibliotheque-scolaire/config/database.sql
+##Étape 4 : Créez la base de données
+cd Backend_Gestionnaire_de_BiblioSchool/config/database.sql
 
 
-###Étape 5 : Lancer le serveur local
+##Étape 5 : Lancer le serveur local
 ```bash
-php -S localhost:8000 -t public
+php -S localhost -t public
 
 ###Étape 6 : strecture file 
 
-📁 library-management/
+📁 Backend_Gestionnaire_de_BiblioSchool/
 │
 
 │   ├── 📁 models/
