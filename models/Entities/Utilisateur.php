@@ -1,5 +1,7 @@
 <?php
-namespace App\models;
+// namespace App\models;
+
+include('./Role.php');
 
 class Utilisateur {
     private $id;
@@ -55,7 +57,7 @@ class Utilisateur {
         $this->phone = $phone;
     }
     
-    public function setRole($role) {
+    public function setRole(Role $role) {
         $this->role = $role;
     }
     
@@ -66,11 +68,34 @@ class Utilisateur {
 
     }
     
-    public function changerPassword() {
-        
+    public function changerPassword($instence) {
+   
     }
     
-    public function updateInfoUser() {
+    public function updateInfoUser($instence){
+        $query = "UPDATE contacts SET nom = :nom, prenom = :prenom, email = :email, phone = :phone WHERE id = :id";
+    $stmt = $connection->prepare($query);
+
+    $nom = $instence->getNom();
+    $prenom = $instence->getPrenom();
+    $email = $instence->getEmail();
+    $phone = $instence->getPhone();
+    $id = $instence->getId();
+
+
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':prenom', $prenom);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':id', $id);
+
+    if ($stmt->execute()) {
+        echo $stmt->rowCount() . " record(s) updated.";
+        // header("location: ../../index.php");
+        exit; 
+    } else {
+        echo "Error updating record: " . implode(", ", $stmt->errorInfo());
+    }
       
     }
     public function __toString()
@@ -82,7 +107,6 @@ class Utilisateur {
 
     
 }
-$livres = new Utilisateur("sdsdf","sqqd","sqdsqds",212);
 
-echo $livres ;
+
 ?>

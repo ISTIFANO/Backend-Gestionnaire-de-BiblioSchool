@@ -1,8 +1,7 @@
 <?php
 
-namespace App\models;
 
-class Role {
+class Role{
     private $id;
     private $type;
     private $description;
