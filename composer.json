@@ -8,8 +8,11 @@
     "whoops": {
         "filp/whoops": "2.*"
   },
-    "autoload": {
-"psr-4": {"App\\": "/"}
+   "autoload": {
+    "psr-4": {
+        "App\\": "./"
+    }
 }
+
     
 }

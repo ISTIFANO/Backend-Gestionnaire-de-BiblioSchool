@@ -16,5 +16,5 @@ return array(
     'PhpDevCommunity\\' => array($vendorDir . '/phpdevcommunity/php-dotenv/src'),
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
-    'App\\' => array('/'),
+    'App\\' => array($baseDir . '/'),
 );

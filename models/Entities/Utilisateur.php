@@ -1,4 +1,5 @@
 <?php
+namespace App\models;
 
 class Utilisateur {
     private $id;
@@ -78,6 +79,10 @@ class Utilisateur {
         
     }
 
+
     
 }
+$livres = new Utilisateur("sdsdf","sqqd","sqdsqds",212);
+
+echo $livres ;
 ?>
