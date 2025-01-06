@@ -3,7 +3,7 @@
 
 include('./Role.php');
 
-class Utilisateur {
+class Utilisateur{
     private $id;
     private $name;
     private $lastname;
@@ -11,11 +11,13 @@ class Utilisateur {
     private $phone;
     private $role;
     
-    public function __construct($name, $lastname, $email, $phone) {
+    public function __construct($name, $lastname, $email, $phone,$role) {
         $this->name = $name;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->phone = $phone;
+        $this->role = $role;
+
     }
     public function getId() {
         return $this->id;
@@ -69,7 +71,23 @@ class Utilisateur {
     }
     
     public function changerPassword($instence) {
-   
+        $query = "UPDATE utilisateurs SET password = :password WHERE id = :id";
+        $stmt = $connection->prepare($query);
+    
+        $Passwordupdate = $instence->getNom();
+        $id = $instence->getId();
+    
+    
+        $stmt->bindParam(':password', $Passwordupdate);
+        $stmt->bindParam(':id', $id);
+    
+    
+        if ($stmt->execute()) {
+            echo $stmt->rowCount() . " record(s) updated.";
+            exit; 
+        } else {
+            echo "Error updating record: " . implode(", ", $stmt->errorInfo());
+        } 
     }
     
     public function updateInfoUser($instence){
