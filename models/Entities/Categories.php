@@ -1,9 +1,9 @@
 <?php
-namespace App\models;
+// namespace App\models;
 
-define('PROJECT_ROOT', dirname(dirname(__DIR__))); 
-require_once PROJECT_ROOT . '/vendor/autoload.php';
-echo PROJECT_ROOT;
+// define('PROJECT_ROOT', dirname(dirname(__DIR__))); 
+// require_once PROJECT_ROOT . '/vendor/autoload.php';
+// echo PROJECT_ROOT;
 
 use App\models\Config;
 

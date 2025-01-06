@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../../public/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
 </head>
 <body>
                 <!-- ================ Order Details List ================= -->
-                <div class="details">
+                <div class="details w-screen ">
                 <div class="recentOrders">
                     <div class="cardHeader">
                         <h2>Recent Orders</h2>

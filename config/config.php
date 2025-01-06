@@ -6,10 +6,8 @@ namespace App\models;
 require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
-//  use Whoops\Run;
  use PDO;
  use PDOException;
-// use Whoops\Handler\PrettyPageHandler;
 
 
 class Config{
@@ -28,12 +26,6 @@ class Config{
         self::$database = $_ENV['DATABASE'];
         self::$user = $_ENV['USER'];
         self::$password = $_ENV['PASSWORD'];
-
-        // $whoops = new \Whoops\Run;
-        // $whoops->allowQuit(false);
-        // $whoops->writeToOutput(false);
-        // $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-        // //  $html = $whoops->handleException($e);
     }
     public static function connect()
     {

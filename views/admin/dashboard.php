@@ -11,33 +11,57 @@
 </head>
 
 <body>
-    <!-- =============== Navigation ================ -->
     <div class="container">
-
-        <?php include("../components/SideBar.php") ?>
-
-        <!-- ========================= Main ==================== -->
-        <div class="main">
-
-        <?php include("../components/search-bar.php") ?>
-
-
-        <!-- ======================= Cards ================== -->
-        <?php include("../components/CardBox.php") ?>
-
-        <!-- ================ Order Details List ================= -->
-        <?php include("../components/Reservation.php") ?>
+     
+            <?php 
+            include("../components/SideBar.php");
+            ?>
+               <div class="main">
+         <?php
+            // include("../components/search-bar.php");
 
 
-        <!-- ================= New Customers ================ -->
-        <?php include("../components/users.php") ?>
-    </div>
-    </div>
+            // include("../components/Reservation.php");    ?>
+     
 
-    <!-- =========== Scripts =========  -->
+    <?php 
+    
+$page = $_GET['action'];
+
+switch ($page) {
+case 'Categories':
+include '../components/users.php';
+break;
+case 'Roles':
+include '../components/users.php';
+break;
+case 'Tags':
+    include '../components/users.php';
+    break;
+case 'Livres':
+include '../components/CardBox.php';
+break;
+case 'Reservation':
+    include '../components/users.php';
+    break;
+    case 'Utilisateurs':
+        include '../components/users.php';
+        break;
+case 'Logout':
+echo "<div class='content'>
+    <h2>Déconnexion</h2>
+    <p>Vous avez été déconnecté.</p>
+</div>";
+break;
+case 'dashboard':
+default:
+break;
+}
+?>
+   </div>
+   </div>
     <script src="../../public/js/main.js"></script>
 
-    <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

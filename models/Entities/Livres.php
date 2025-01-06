@@ -5,8 +5,8 @@
 
 // use App\models\Tags;
 
-use App\models\Categories;
-use App\models\Tags;
+// use App\models\Categories;
+// use App\models\Tags;
 
 include("./Categories.php");
 include("./Tags.php");
@@ -18,14 +18,12 @@ class Livres {
     private  $tags = [];
     private $categorie;
     
-    public function __construct($id,$titre, $auteur,$categorie) {
+    public function __construct($id,$titre, $auteur,$disponibilite) {
         $this->titre = $titre;
         $this->auteur = $auteur;
-        $this->categorie =$categorie;
-        $this->id=$id;
-
-
+        $this->disponibilite =$disponibilite;
         $this->disponibilite = true;
+        $this->id = NULL;
     }
     
     public function searchForBooks($Aamir) {
@@ -38,7 +36,7 @@ class Livres {
        return $this->tags;
     }
     public function addCategorie(Categories $categor) {
-        $this->categorie=$categor;
+        $this->categorie[]=$categor;
     }
     
 
@@ -69,33 +67,57 @@ $this->id=$id;
         $this->disponibilite = $disponibilite;
     }
 }
+// $tag = new Tags(1, "csqguqso");
+// $tagA = new Tags(2, "csqf,dk,kfguqso");
+// $tagB = new Tags(341, "csojkfdnjnfqguqso");
+
+// $tagC = new Tags(14, "cscnfdjqguqso");
+// $tagD = new Tags(41, "csqguqso");
+
+// $categor1 = new Categories(2, "dsfsd");
+
+// $Per = new Livres(1, "dfsdfs", "SFKSKDOSD", "FANSE");
+
+// $Per->addCategorie($categor1);
+// $Per->addTag($tag);
+// $Per->addTag($tagA);
+// $Per->addTag($tagB);
+// $Per->addTag($tagC);
+// $Per->addTag($tagD);
 
 
-$Per = new Livres(1, "dfsdfs", "SFKSKDOSD", "FANSE");
+// foreach($Per->getTag() as $kay){
 
-$categor1 = new Categories(2, "dsfsd");
+// echo  $kay->getName();
 
-$tag = new Tags(1, "csqguqso");
-$tag2 = new Tags(4, "ERERERE");
-$tag3 = new Tags(2, "ELAMIRI");
-$tag4 = new Tags(6, "AAMIR");
-$tag5 = new Tags(5, "REEREE");
-
-$Per->addTag($tag2);
-$Per->addTag($tag3);
-$Per->addTag($tag4);
-$Per->addTag($tag5);
-$Per->addTag($tag);
-
-var_dump($Per->getTag());
-foreach ($Per->getTag() as $t) {
-    echo $t->getName() . "<br>";
-}
+// }
 
 
-$Per->addCategorie($categor1);
-echo '<pre>';
-var_dump($Per);  
-echo '</pre>';
+
+// var_dump($Per);
+// $categor1 = new Categories(2, "dsfsd");
+
+// $tag = new Tags(1, "csqguqso");
+// $tag2 = new Tags(4, "ERERERE");
+// $tag3 = new Tags(2, "ELAMIRI");
+// $tag4 = new Tags(6, "AAMIR");
+// $tag5 = new Tags(5, "REEREE");
+
+// $Per->addTag($tag2);
+// $Per->addTag($tag3);
+// $Per->addTag($tag4);
+// $Per->addTag($tag5);
+// $Per->addTag($tag);
+
+// var_dump($Per->getTag());
+// foreach ($Per->getTag() as $t) {
+//     echo $t->getName() . "<br>";
+// }
+
+
+// $Per->addCategorie($categor1);
+// echo '<pre>';
+// var_dump($Per);  
+// echo '</pre>';
 
 ?>

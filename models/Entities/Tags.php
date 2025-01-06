@@ -1,7 +1,7 @@
 <?php
-namespace App\models;
+// namespace App\models;
 
-class Tags {
+class Tags{
     private $id;
     private $name;
     
@@ -29,7 +29,9 @@ class Tags {
     public function __toString() {
         return "Tag ID: {$this->id} || Name: {$this->name}"; 
     }
+    
 }
+
 
 $Tages = new Tags(3,"9or2an");
 // echo $Tages;
