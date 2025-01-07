@@ -7,7 +7,6 @@ class Categories {
     private $id;
     private $name;
     private $created_at;
-    private $connexion; 
 
     public function __construct($id = null, $name = null) {
         $this->id = $id;
@@ -75,25 +74,44 @@ class Categories {
         return $stmt->execute([$this->getId()]);
     }
 
-    public static function getAllCategories() {
+    public  function getAllCategories() {
         $conn = Config::connect();    
         $sql = "SELECT * FROM categories";
         return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getCategoryByName($name) {
-        $conn = Config::connect();         
-        $sql = "SELECT id FROM categories WHERE name = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$name]);
+   
+//     public static function getCategoryByName($name) {
+//         $conn = Config::connect();         
+//         $sql = "SELECT *FROM categories WHERE Name = "."'".$name."'";
+//         // echo  $sql;
+//         $stmt = $conn->prepare($sql);
+//         $stmt->execute();
+//             // $result = $stmt->fetch(PDO::FETCH_ASSOC);
+// // var_dump($result);
+//             return  $conn->lastInsertId();
+//     }
+public static function getCategoryByName($name) {
+    $conn = Config::connect();         
+    $sql = "SELECT id FROM categories WHERE Name = '$name'";
+    $stmt = $conn->prepare($sql);
+    print_r($stmt) ;
+    $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-       
-        return $result ? $result['id'] : null;
-    }
+        var_dump($result['id']);
+
+        return $result['id'];
 }
 
-$category = new Categories(null, " miltafizi9a");
-$category->saveCategory();
-echo $category;  
+    
+    
+}
+
+$category = new Categories(null, "ismail");
+// $category->getCategoryByName("Flipo");
+//  $category->getCategoryByName("ismail");
+
+// var_dump($category->getCategoryByName("ismail"));
+// var_dump( $category);
+
 ?>

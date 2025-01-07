@@ -1,9 +1,11 @@
 <?php
 // namespace App\models;
 
-// require_once '../../vendor/autoload.php';
+ require_once '../../vendor/autoload.php';
 
-// use App\models\Tags;
+ use App\models\config;
+include("../../config/config.php");
+
 
 // use App\models\Categories;
 // use App\models\Tags;
@@ -29,9 +31,9 @@ class Livres {
     public function searchForBooks($Aamir) {
     }
     
-    public function addTag(Tags $tag) {
-        $this->tags[] = $tag;
-    }
+    // public function addTag(Tags $tag) {
+    //     $this->tags[] = $tag;
+    // }
     public function getTag() {
        return $this->tags;
     }
@@ -65,6 +67,89 @@ $this->id=$id;
     
     public function setDisponibilite($disponibilite) {
         $this->disponibilite = $disponibilite;
+    }
+    public function save() {
+        $sql = "INSERT INTO livres (titre, auteur, disponibilite, photo, categorie_id) 
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute([
+            $this->getTitre(),
+            $this->getAuteur(),
+            $this->getDisponibilite(),
+            $this->getPhoto(),
+            $this->getCategorie()->getId() 
+        ]);
+        $this->id = $this->connexion->lastInsertId(); 
+        $this->saveTags(); 
+    }
+
+    private function saveTags() {
+        if (!empty($this->tags)) {
+            foreach ($this->tags as $tag) {
+                $sql = "INSERT INTO livre_tag (livre_id, tag_id) VALUES (?, ?)";
+                $stmt = $this->connexion->prepare($sql);
+                $stmt->execute([$this->getId(), $tag->getId()]);
+            }
+        }
+    }
+
+    public function update() {
+        $sql = "UPDATE livres SET titre = ?, auteur = ?, disponibilite = ?, photo = ?, categorie_id = ? 
+                WHERE id = ?";
+        $stmt = $this->connexion->prepare($sql);
+        return $stmt->execute([
+            $this->getTitre(),
+            $this->getAuteur(),
+            $this->getDisponibilite(),
+            $this->getPhoto(),
+            $this->getCategorie()->getId(),
+            $this->getId()
+        ]);
+    }
+
+    public function delete() {
+        $sql = "DELETE FROM livre_tag WHERE livre_id = ?";
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute([$this->getId()]);
+
+        $sql = "DELETE FROM livres WHERE id = ?";
+        $stmt = $this->connexion->prepare($sql);
+        return $stmt->execute([$this->getId()]);
+    }
+
+    public static function getById($id) {
+        $conn = Config::connect();
+        $sql = "SELECT * FROM livres WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($result) {
+            $livre = new Livres($result['titre'], $result['auteur'], $result['disponibilite'], $result['photo'], $result['id']);
+            // $livre->setCategorie(Categories::getById($result['categorie_id'])); 
+            return $livre;
+        }
+        return null;
+    }
+
+    public static function getAll() {
+        $conn = Config::connect();
+        $sql = "SELECT * FROM livres";
+        $stmt = $conn->query($sql);
+        $books = [];
+        
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $livre = new Livres($row['titre'], $row['auteur'], $row['disponibilite'], $row['photo'], $row['id']);
+            // $livre->setCategorie(Categories::getById($row['categorie_id']));
+            $books[] = $livre;
+        }
+        return $books;
+    }
+    
+    // Add a tag to the book (many-to-many relationship)
+    public function addTag(Tags $tag) {
+        $this->tags[] = $tag;
+        $this->saveTags(); // Save the tag in the related table
     }
 }
 // $tag = new Tags(1, "csqguqso");
