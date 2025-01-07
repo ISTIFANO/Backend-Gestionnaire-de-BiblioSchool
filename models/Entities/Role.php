@@ -1,6 +1,5 @@
 <?php
 use App\models\Config; 
-include("Utilisateur.php");
 include("../../config/config.php");
 
 
@@ -8,6 +7,11 @@ class Role{
     private $id;
     private $type;
     private $description;
+        
+    public function __construct()
+    {
+        
+    }
     
     public function setFullRole($id,$type, $description) {
         $this->id = $id;
@@ -40,9 +44,9 @@ class Role{
         $this->description = $description;
     }
 
-    public function __toString() {
-        return "Role ID: {$this->id} || Type: {$this->type} || Description: {$this->description}";
-    }
+    // public function __toString() {
+    //     return "Role ID: {$this->id} || Type: {$this->type} || Description: {$this->description}";
+    // }
     public function saveRole() {
         $conn = Config::connect();
         
@@ -97,8 +101,10 @@ class Role{
 
     
 }
+// $roles = new Role();
+// $roles->setFullRole(8,"sdnjsdk","hdgvnsl,kdm");
+// $roles->saveRole();
 
-// $roles = new Role(1,"Administrateur","MOL CHI");
 
-// echo $roles ;
+// var_dump($roles);
 ?>
