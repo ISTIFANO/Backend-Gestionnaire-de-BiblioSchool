@@ -39,12 +39,14 @@ class Tags{
         
         $stmt = $conn->prepare($sql);
         
-        return $stmt->execute([
+         $stmt->execute([
             $this->getId(), 
             $this->getName(), 
          
            
         ]);
+        return $conn->lastInsertId();
+
     }
 
     public function updateTags() {
@@ -74,13 +76,16 @@ class Tags{
         return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getTagsById($id) {
+    public static function getTagsById($name) {
         $conn = Config::connect();         
-        $sql = "SELECT * FROM tags WHERE id = ?";
+        $sql = "SELECT id FROM tags WHERE name = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute([$name]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['id'];
     }
+    
+    
     
 }
 
@@ -93,9 +98,8 @@ class Tags{
     
 
 
-// $Tages = new Tags(3,"9or2an");
-// $Tages->getTagsById(3);
-
-// var_dump($Tages)
+$Tages = new Tags(6,"Amir");
+var_dump($Tages->getTagsById("Amir")) ;
+;
 
 ?>

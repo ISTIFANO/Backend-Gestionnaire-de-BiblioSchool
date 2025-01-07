@@ -1,11 +1,7 @@
 <?php
-// namespace App\models;
-
-// define('PROJECT_ROOT', dirname(dirname(__DIR__))); 
-// require_once PROJECT_ROOT . '/vendor/autoload.php';
-// echo PROJECT_ROOT;
 
 use App\models\Config;
+include("../../config/config.php");
 
 class Categories {
     private $id;
@@ -13,12 +9,10 @@ class Categories {
     private $created_at;
     private $connexion; 
 
-    public function __construct($id,$name) {
-        // $this->connexion = (new Config())::connect();
-        $this->name = $name;
+    public function __construct($id = null, $name = null) {
         $this->id = $id;
-
-        $this->created_at = date('Y-m-d H:i:s');
+        $this->name = $name;
+        $this->created_at = date('Y-m-d H:i:s'); 
     }
 
     public function getId() {
@@ -41,16 +35,65 @@ class Categories {
         return $this->created_at;
     }
 
-    public function getConnexion() {
-        return $this->connexion;
-    }
-
     public function __toString() {
         return "Category ID: {$this->id} || Name: {$this->name} || Created At: {$this->created_at}";
     }
+
+    public function saveCategory() {
+        $conn = Config::connect();
+        
+        $sql = "INSERT INTO categories (name, created_at) 
+                VALUES (?, ?)";
+        
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute([
+            $this->getName(), 
+            $this->getCreatedAt()
+        ]);
+
+        return $conn->lastInsertId();
+    }
+
+    public function updateCategory() {
+        $conn = Config::connect(); 
+        $sql = "UPDATE categories 
+                SET name = ?, created_at = ?
+                WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute([
+            $this->getName(), 
+            $this->getCreatedAt(), 
+            $this->getId()
+        ]);
+    }
+
+    public function deleteCategory() {
+        $conn = Config::connect();      
+        $sql = "DELETE FROM categories WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute([$this->getId()]);
+    }
+
+    public static function getAllCategories() {
+        $conn = Config::connect();    
+        $sql = "SELECT * FROM categories";
+        return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getCategoryByName($name) {
+        $conn = Config::connect();         
+        $sql = "SELECT id FROM categories WHERE name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$name]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+       
+        return $result ? $result['id'] : null;
+    }
 }
 
-// Example of creating a new category
-$category = new Categories(1,"Science Fiction");
-echo $category;  // This will output: Category [ID: , Name: Science Fiction, Created At: 2025-01-04 12:00:00]
+$category = new Categories(null, " miltafizi9a");
+$category->saveCategory();
+echo $category;  
 ?>
