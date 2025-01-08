@@ -2,14 +2,17 @@
 // namespace App\models;
 // define('PROJECT_ROOT', dirname(dirname(__DIR__))); 
 
-// require_once PROJECT_ROOT . '/vendor/autoload.php';
+require_once PROJECT_ROOT . '/vendor/autoload.php';
+// require_once '../../vendor/autoload.php';
+ use App\models\Etat;
 
-// use App\models\Etat;
+include_once('./Utilisateur.php');
+include_once('./Livres.php');
+include_once('./Etat.php');
 
-include('./Utilisateur.php');
-include('./Livres.php');
-// include('./Tags.php');
-// include('./Categories.php');
+
+    // include('./Tags.php');
+include_once('./Categories.php');
 
 
 
@@ -72,24 +75,34 @@ class Reservation {
     }
 }
 
-$categor1 = new Categories(2, "dsfsd");
-$tag = new Tags(1, "csqguqso");
+// $categor1 = new Categories(4, "dsbbjxbs");
+// $tag = new Tags(1, "csqguqso");
 
-$Per = new Livres(1, "dfsdfs", "SFKSKDOSD", "FANSE");
+// $Per = new Livres(1, "dfsdfs", "SFKSKDOSD", "FANSE");
 
-$Per->addCategorie($categor1);
-$Per->addTag($tag);
+// $Per->addCategorie($categor1);
+// $Per->addTag($tag);
 
 // public function __construct($id, $type, $description) {
     // public function __construct($name, $lastname, $email, $phone,$role) {
+        // public function __construct($name, $lastname, $email,$password, $phone,$photo) {
 
-    $Role = new Role(1,"Aprenent","mOLCHI");
-    $user = new Utilisateur("AKDSK","jsdubdn","HJDSJNC","JBDHBS",123456789);
+    $Role = new Role();
+    $Role->setFullRole(null,"nsbhbsdj","jnsdjsn");
+    var_dump($Role); 
+        $Role->saveRole();
+    $user = new Utilisateur("AKDSK","jsdubdn","HJDSJNC","JBDHBS",123456789,"dhsvujb");
+
     $user->setRole($Role);
 
-    $Reservation = new Reservation($user,$Per,"panding");
+    var_dump($user);
 
-    var_dump($Reservation);
+
+    // public function __construct(Utilisateur $user, Livres $livre, $etat = null) {
+
+    // $Reservation = new Reservation($user,$Per,"panding");
+
+    // var_dump($Reservation);
 
 
 ?>

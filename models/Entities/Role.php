@@ -1,6 +1,6 @@
 <?php
 use App\models\Config; 
-include("../../config/config.php");
+include_once("../../config/config.php");
 
 
 class Role{

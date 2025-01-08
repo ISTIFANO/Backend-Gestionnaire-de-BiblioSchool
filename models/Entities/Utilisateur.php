@@ -1,7 +1,7 @@
 <?php
 // namespace App\models;
 
-include('./Role.php');
+include_once('./Role.php');
 
 class Utilisateur{
     private $id;
@@ -12,7 +12,7 @@ class Utilisateur{
     private $phone;
     private $photo;
 
-    private $role;
+    private  $role;
     
     public function __construct($name, $lastname, $email,$password, $phone,$photo) {
         $this->name = $name;

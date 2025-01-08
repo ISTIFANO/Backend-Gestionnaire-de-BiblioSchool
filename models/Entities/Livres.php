@@ -1,28 +1,35 @@
 <?php
 // namespace App\models;
 
- require_once '../../vendor/autoload.php';
+  require_once '../../vendor/autoload.php';
 
- use App\models\config;
-include("../../config/config.php");
+use App\models\Config;
+use App\models\Categories;
+
+
+require_once("../../config/config.php");
 
 
 // use App\models\Categories;
 // use App\models\Tags;
 
-include("./Categories.php");
-include("./Tags.php");
+require_once("./Categories.php");
+include_once("./Tags.php");
 class Livres {
     private $id;
     private $titre;
     private $auteur;
+    private $photo;
+
     private $disponibilite;
     private  $tags = [];
     private $categorie;
     
-    public function __construct($id,$titre, $auteur,$disponibilite) {
+    public function __construct($id,$titre, $auteur,$photo,$disponibilite) {
         $this->titre = $titre;
         $this->auteur = $auteur;
+        $this->photo = $photo;
+
         $this->disponibilite =$disponibilite;
         $this->disponibilite = true;
         $this->id = NULL;
@@ -38,9 +45,12 @@ class Livres {
        return $this->tags;
     }
     public function addCategorie(Categories $categor) {
-        $this->categorie[]=$categor;
+        $this->categorie=$categor;
     }
-    
+
+       public function getCategorie() {
+        return $this->categorie;
+    }
 
     public function getAuteur() {
         return $this->auteur;
@@ -50,6 +60,12 @@ class Livres {
         }
     public function getTitre() {
         return $this->titre;
+    }
+    public function SetPhoto($photo){
+        $this->photo=$photo;
+        }
+    public function getPhoto() {
+        return $this->photo;
     }
 public function SetTitre($titre){
 $this->titre=$titre;
@@ -69,34 +85,44 @@ $this->id=$id;
         $this->disponibilite = $disponibilite;
     }
     public function save() {
+        $conn = Config::connect();      
+
         $sql = "INSERT INTO livres (titre, auteur, disponibilite, photo, categorie_id) 
                 VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->connexion->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->execute([
             $this->getTitre(),
             $this->getAuteur(),
             $this->getDisponibilite(),
+
             $this->getPhoto(),
             $this->getCategorie()->getId() 
         ]);
-        $this->id = $this->connexion->lastInsertId(); 
+
+    //     var_dump($this->getCategorie()->getId() 
+    // );
+        $this->id = $conn->lastInsertId(); 
         $this->saveTags(); 
     }
 
     private function saveTags() {
+        $conn = Config::connect();      
+
         if (!empty($this->tags)) {
             foreach ($this->tags as $tag) {
                 $sql = "INSERT INTO livre_tag (livre_id, tag_id) VALUES (?, ?)";
-                $stmt = $this->connexion->prepare($sql);
+                $stmt =$conn->prepare($sql);
                 $stmt->execute([$this->getId(), $tag->getId()]);
             }
         }
     }
 
     public function update() {
+        $conn = Config::connect();      
+
         $sql = "UPDATE livres SET titre = ?, auteur = ?, disponibilite = ?, photo = ?, categorie_id = ? 
                 WHERE id = ?";
-        $stmt = $this->connexion->prepare($sql);
+        $stmt = $conn->prepare($sql);
         return $stmt->execute([
             $this->getTitre(),
             $this->getAuteur(),
@@ -108,12 +134,14 @@ $this->id=$id;
     }
 
     public function delete() {
+        $conn = Config::connect();      
+
         $sql = "DELETE FROM livre_tag WHERE livre_id = ?";
-        $stmt = $this->connexion->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->execute([$this->getId()]);
 
         $sql = "DELETE FROM livres WHERE id = ?";
-        $stmt = $this->connexion->prepare($sql);
+        $stmt = $conn->prepare($sql);
         return $stmt->execute([$this->getId()]);
     }
 
@@ -139,7 +167,7 @@ $this->id=$id;
         $books = [];
         
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $livre = new Livres($row['titre'], $row['auteur'], $row['disponibilite'], $row['photo'], $row['id']);
+            $livre = new Livres($row['id'],$row['Titre'], $row['Auteur'], $row['Disponibilite'], $row['Photo']);
             // $livre->setCategorie(Categories::getById($row['categorie_id']));
             $books[] = $livre;
         }
@@ -147,62 +175,36 @@ $this->id=$id;
     }
     
     // Add a tag to the book (many-to-many relationship)
-    public function addTag(Tags $tag) {
-        $this->tags[] = $tag;
-        $this->saveTags(); // Save the tag in the related table
-    }
+    // public function addTag(Tags $tag) {
+    //     $this->tags[] = $tag;
+    //     $this->saveTags(); // Save the tag in the related table
+    // }
+    // public function __construct($id,$titre, $auteur,$photo,$disponibilite) {
+
+
 }
-// $tag = new Tags(1, "csqguqso");
-// $tagA = new Tags(2, "csqf,dk,kfguqso");
-// $tagB = new Tags(341, "csojkfdnjnfqguqso");
+$categoriez = new Categories(6,"lmzika");
+$id=$categoriez->getCategoryByName("lmzika");
 
-// $tagC = new Tags(14, "cscnfdjqguqso");
-// $tagD = new Tags(41, "csqguqso");
+$Tages = new Tags(7, "ANCKSQJKSK?Q?S");
+var_dump($Tages->getTagsById("Fantasy"));;
+$livres = new Livres(null,"fsfdddddddddddd","dsds","dssd.png","true");
 
-// $categor1 = new Categories(2, "dsfsd");
-
-// $Per = new Livres(1, "dfsdfs", "SFKSKDOSD", "FANSE");
-
-// $Per->addCategorie($categor1);
-// $Per->addTag($tag);
-// $Per->addTag($tagA);
-// $Per->addTag($tagB);
-// $Per->addTag($tagC);
-// $Per->addTag($tagD);
+$livres->addCategorie($categoriez);
+$livres->getAll();
+var_dump($livres->getAll()
+);
 
 
-// foreach($Per->getTag() as $kay){
 
-// echo  $kay->getName();
+// foreach( $livres->getAll() as $key ){
+//     $livres = new Livres(null,"fsfdddddddddddd","dsds","dssd.png","true");
 
+
+// // var_dump()
 // }
 
-
-
-// var_dump($Per);
-// $categor1 = new Categories(2, "dsfsd");
-
-// $tag = new Tags(1, "csqguqso");
-// $tag2 = new Tags(4, "ERERERE");
-// $tag3 = new Tags(2, "ELAMIRI");
-// $tag4 = new Tags(6, "AAMIR");
-// $tag5 = new Tags(5, "REEREE");
-
-// $Per->addTag($tag2);
-// $Per->addTag($tag3);
-// $Per->addTag($tag4);
-// $Per->addTag($tag5);
-// $Per->addTag($tag);
-
-// var_dump($Per->getTag());
-// foreach ($Per->getTag() as $t) {
-//     echo $t->getName() . "<br>";
-// }
-
-
-// $Per->addCategorie($categor1);
-// echo '<pre>';
-// var_dump($Per);  
-// echo '</pre>';
+// $livres->save();
+var_dump($livres);
 
 ?>

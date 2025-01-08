@@ -1,14 +1,16 @@
 <?php
-
+namespace App\models;
+include_once '../../vendor/autoload.php';
 use App\models\Config;
-include("../../config/config.php");
-
+use Pdo;
+// include("");
+// include_once '../../config/config.php';
 class Categories {
     private $id;
     private $name;
     private $created_at;
 
-    public function __construct($id = null, $name = null) {
+    public function __construct($id, $name) {
         $this->id = $id;
         $this->name = $name;
         $this->created_at = date('Y-m-d H:i:s'); 
@@ -91,16 +93,25 @@ class Categories {
 // // var_dump($result);
 //             return  $conn->lastInsertId();
 //     }
-public static function getCategoryByName($name) {
+public function getCategoryByName($name) {
     $conn = Config::connect();         
-    $sql = "SELECT id FROM categories WHERE Name = '$name'";
+    $sql = "SELECT id FROM categories WHERE Name = :name";
     $stmt = $conn->prepare($sql);
-    print_r($stmt) ;
+    
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    
     $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($result['id']);
-
-        return $result['id'];
+  
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($result === false) {
+    
+        echo "No category'$name'.";
+        return null;
+    }
+    
+    var_dump($result['id']);
+    return $result['id'];
 }
 
     
