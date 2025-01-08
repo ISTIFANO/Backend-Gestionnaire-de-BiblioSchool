@@ -1,11 +1,16 @@
 <?php
-//  define('PROJECT_ROOT', dirname(dirname(__DIR__ . '/../')));
+namespace App\models;
+
+ define('PROJECT_ROOT', dirname(dirname(__DIR__ . '/../')));
 
 require_once PROJECT_ROOT . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
+ use PDO;
+ use PDOException;
 
-class config{
+
+class Config{
 
     protected static $connexion;
     private static $hostname;
@@ -30,7 +35,7 @@ class config{
             try {
                 self::$connexion = new PDO($info, self::$user, self::$password);
         if (self::$connexion) {
-                    //  echo "<h1>Connected succ!</h1>";
+                    //   echo "<h1>Connected succ!</h1>";
                 }
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -39,5 +44,5 @@ class config{
         return self::$connexion;
     }
 }
-$con = new DatabaseConfiguration();
+$con = new config();
 $con::connect();
